@@ -1,70 +1,54 @@
 #include <stdio.h>
 
-int nhapdayso(int a[]) {
-    int n;
-    scanf("%d", &n);
-    for (int i = 0; i < n; i++) {
-        scanf("%d", &a[i]);
-    }
-    return n;
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
 }
-int chen_so(int a[], int n) {
-    int x, k;
-    scanf("%d %d", &x, &k);
-    if (k > n) k = n;
-    if (k < 0) k = 0;
-    for (int i = n; i > k; i--) {
-        a[i] = a[i - 1];
-    }
-    a[k] = x;
-    return n + 1;
-}
-void sap_xep(int a[], int n) {
+void bubu_sort_giam(int arr[], int n) {
     for (int i = 0; i < n - 1; i++) {
-        for (int j = i + 1; j < n; j++) {
-            if (a[j] < a[i]) {
-                int temp = a[i];
-                a[i] = a[j];
-                a[j] = temp;
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] < arr[j + 1]) {
+                swap(&arr[j], &arr[j + 1]);
             }
         }
     }
 }
-int chen_dung_vi_tri(int a[], int n) {
-    int x;
-    scanf("%d", &x);
-    int k = 0;
-    while (k < n && a[k] < x) k++;
-    for (int i = n; i > k; i--) {
-        a[i] = a[i - 1];
-    }
-    a[k] = x;
-    return n + 1;
-}
-int xoa_phan_tu(int a[], int n) {
-    int m = 0;
-    for (int i = 0; i < n; i++) {
-        if (a[i] % 5 != 0) {
-            a[m++] = a[i];
+void bubu_sort_tang(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                swap(&arr[j], &arr[j + 1]);
+            }
         }
     }
-    return m;
 }
-void in_ra(int a[], int n) {
-    for (int i = 0; i < n; i++) {
-        printf("%d ", a[i]);
-    }
-    printf("\n");
-}
-
 int main() {
-    int a[105];
     int n;
-    n = nhapdayso(a);
-    n = chen_so(a, n);
-    sap_xep(a, n);
-    n = chen_dung_vi_tri(a, n);
-    n = xoa_phan_tu(a, n);
-    in_ra(a, n);
+    scanf("%d", &n);
+    if (n<0 || n>100) return 0;
+    int numbers[100];
+    int even[100];
+    int odd[100];
+    int evenCount = 0;
+    int oddCount = 0;
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &numbers[i]);
+        if (numbers[i] >= 0) {
+            if (numbers[i] % 2 == 0) {
+                even[evenCount++] = numbers[i];
+            } else {
+                odd[oddCount++] = numbers[i];
+            }
+        }
+    }
+    bubu_sort_giam(even, evenCount);
+    bubu_sort_tang(odd, oddCount);
+    for (int i = 0; i < evenCount; i++) {
+        printf("%d ", even[i]);
+    }
+    for (int i = 0; i < oddCount; i++) {
+        printf("%d ", odd[i]);
+    }
     return 0;
 }
